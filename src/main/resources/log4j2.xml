@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Properties>
+
+        <Property name="LOG_DIR" value="logs/"/>
+
+        <Property name="COMMON_PATTERN">
+            %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] (%F:%L) %-5level %logger{36} --- %msg%n
+        </Property>
+
+        <Property name="ROLLING_PATTERN">
+            %d{ISO8601} %-5p [%t] (%F:%L) --- %m%n
+        </Property>
+
+        <Property name="FAIL_LOG_PATTERN">
+            %m%n
+        </Property>
+
+        <Property name="MINIGAME_FLOW1_PATTERN">
+            %d{yyyy-MM-dd HH:mm:ss.SSS} --- %m%n
+        </Property>
+
+    </Properties>
+
+    <Appenders>
+        <Console name="ConsoleLog" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${COMMON_PATTERN}"/>
+            <ThresholdFilter level="info" onMatch="ACCEPT" />
+        </Console>
+
+        <RollingFile name="common" fileName="${LOG_DIR}general/common.log"
+                     filePattern="${LOG_DIR}general/common.%d{yyyy-MM-dd-HH}.log">
+            <PatternLayout pattern="${ROLLING_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+
+
+    </Appenders>
+
+
+    <Loggers>
+
+        <!--Core-->
+
+        <Root level="debug">
+            <AppenderRef ref="ConsoleLog"/>
+        </Root>
+
+        <Logger name="common" level="info">
+            <AppenderRef ref="common"/>
+        </Logger>
+
+
+    </Loggers>
+</Configuration>
