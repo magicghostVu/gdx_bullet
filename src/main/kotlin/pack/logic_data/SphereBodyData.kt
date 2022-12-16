@@ -12,6 +12,7 @@ class SphereBodyData(
     ) : Disposable {
 
     override fun dispose() {
+        collisionShape.dispose()
         body.dispose()
         motionState.dispose()
     }
